@@ -6,6 +6,7 @@ import java.util.StringJoiner;
 import java.io.CharArrayWriter;
 
 import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 public class WordFrequencyGame {
     public String getResult(String inputStr) {
@@ -17,13 +18,9 @@ public class WordFrequencyGame {
     }
 
     private String getResult(List<Input> wordTimesList) {
-
-        StringJoiner joiner = new StringJoiner("\n");
-        for (Input wordTimes : wordTimesList) {
-            String wordTimesStr = wordTimes.getValue() + " " + wordTimes.getWordCount();
-            joiner.add(wordTimesStr);
-        }
-        return joiner.toString();
+        return wordTimesList.stream()
+                .map(input -> String.format("%s %d",input.getValue(),input.getWordCount()))
+                .collect(Collectors.joining("\n"));
     }
 
     private List<Input> getWordTimesList(Map<String, Integer> wordTimesMap) {
